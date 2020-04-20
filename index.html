@@ -1,0 +1,109 @@
+<!-- 
+    Implicit Binding
+    Explicit Binding
+    new Binding
+    window Binding
+ -->
+
+<script>
+    //Implicit Binding
+
+    var sayNameMixin = function (e) {
+        e.sayName = function () {
+            console.log(this.name)
+        }
+    }
+
+    var me = {
+        name: 'Steven',
+        age: 29,
+
+
+    };
+
+    var you = {
+        name: 'Bob',
+        age: 80,
+
+
+    };
+
+
+    sayNameMixin(me);
+    sayNameMixin(you);
+
+    me.sayName();
+    you.sayName();
+
+
+//Explicit Binding
+
+    var Person = function (name, age) {
+        return {
+            name: name,
+            age: age,
+            isName: function () {
+                console.log(this.name)
+            },
+            mother: {
+                name: 'Robin',
+                isName: function () {
+                    console.log(this.name)
+                }
+            }
+        }
+    }
+
+    var jim = Person('Jim', 42);
+    jim.isName();
+    jim.mother.isName();
+
+
+    var anotherName = function (lang1, lang2, e) {
+        console.log('My name is ' + this.name + 'I know' + lang1 + ' ' + lang2 + ' ' + e);
+    }
+
+    var stacey = {
+        name: 'Stacey',
+        age: 322,
+    }
+
+    ;
+
+    var languages = ['JS', 'Python', 'Ruby'];
+
+    anotherName.call(stacey, languages[0], languages[1], languages[2]) //calls languanges 1 by 1
+
+    anotherName.apply(stacey, languages); //parses in all the languages
+
+    var newFn = anotherName.bind(stacey, languages[0], languages[1], languages[
+        2]) //makes a new function that you can call later
+    newFn();
+
+//new Binding
+
+var Animal = function(color, name, type){
+    this.color = color;
+    this.name =  name;
+    this.type = type;
+}
+
+var zebra  = new Animal('black and white', 'Zorro', 'Zebra') //new object
+console.log(zebra);
+
+
+//window Binding
+
+function sayAge(){
+    'use strict'
+    console.log(this.age);
+};
+
+var newMe = {
+    age: 25,
+};
+
+sayAge();
+window.age = 35;
+sayAge();
+</script>
